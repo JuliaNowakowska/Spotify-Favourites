@@ -12,8 +12,8 @@ class SpotifyClient:
             scope=SCOPE
         ))
 
-    def get_top_tracks(self, time_range="long_term"):
-        return self.client.current_user_top_tracks(time_range=time_range)
+    def get_top_tracks(self):
+        return self.client.current_user_top_tracks(time_range="long_term")
 
     def extract_track_data(self, track):
         return Track(
