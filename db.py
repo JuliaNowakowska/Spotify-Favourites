@@ -33,5 +33,9 @@ class Database:
         rows = cursor.fetchall()
         return [Track(*row) for row in rows]
 
-    def close(self):
-        self.conn.close()
+    def get_top_track(self):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT * FROM top_tracks LIMIT 1')
+        top_track = cursor.fetchall()
+        return top_track
+
