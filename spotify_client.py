@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE
+from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
 from track import Track
 
 class SpotifyClient:
@@ -9,10 +9,10 @@ class SpotifyClient:
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
             redirect_uri=REDIRECT_URI,
-            scope=SCOPE
+            scope="user-top-read"
         ))
 
-    def get_top_tracks(self):
+    def get_tracks(self):
         return self.client.current_user_top_tracks(time_range="long_term")
 
     def extract_track_data(self, track):
@@ -20,7 +20,5 @@ class SpotifyClient:
             id=track["id"],
             name=track["name"],
             artists=', '.join([artist['name'] for artist in track['artists']]),
-            popularity=track["popularity"],
-            duration_ms=track["duration_ms"],
             url=track["href"]
         )
