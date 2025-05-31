@@ -13,12 +13,13 @@ def main():
         temp_track = client.extract_track_data(track)
         db.insert_track(temp_track)
 
-    # getting Genius song_ids of my favourite tracks from Spotify
+    # identifying the songs' Genius ID and getting the lyrics
     artist_track = db.get_track_artist()
-    song_ids = []
     for track, artist in artist_track:
         song_id = genius.get_song_id(track, artist)
-        song_ids.append(song_id)
+        if song_id:
+            print(genius.client.lyrics(song_id=song_id, remove_section_headers=True))
+
 
 
 if __name__ == "__main__":
