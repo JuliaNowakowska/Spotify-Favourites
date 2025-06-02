@@ -51,6 +51,12 @@ class Database:
         rows = cursor.fetchall()
         return [Track(*row) for row in rows]
 
+    def get_all_lyrics(self):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT * FROM lyrics')
+        rows = cursor.fetchall()
+        return [Lyrics(*row) for row in rows]
+
     def get_top_track(self):
         cursor = self.conn.cursor()
         cursor.execute('SELECT * FROM favourite_tracks LIMIT 1')
@@ -59,6 +65,6 @@ class Database:
 
     def get_track_artist(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT name, artists FROM favourite_tracks')
+        cursor.execute('SELECT id, name, artists FROM favourite_tracks')
         rows = cursor.fetchall()
         return [(row) for row in rows]
