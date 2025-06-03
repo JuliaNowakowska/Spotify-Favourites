@@ -23,9 +23,29 @@ def fetch_lyrics(db, genius_client):
             db.insert_lyrics(lyrics)
 
 def main():
+    parser = argparse.ArgumentParser(description="Fetch Spotify tracks adn Genius lyrics.")
+    parser.add_argument('--fetch-spotify', action='store_true', help="Fetch and store your favourite tracks from Spotofy.")
+    parser.add_argument('--fetch-lyrics', action='store_true', help="Fetch and store lyrics of your Spotify favourite tracks from Genius.")
+
+    args = parser.parse_args()
+
     db = Database()
     spotify_client = SpotifyClient()
     genius_client = GeniusClient()
+
+    if args.fetch_spotify:
+        print("Fetching tracks from Spotify...")
+        fetch_spotify_tracks(db, spotify_client)
+
+    if args.fetch_lyrics:
+        print("Fetching lyrics from Genius...")
+        fetch_lyrics(db, genius_client)
+
+    if not args.fetch_spotify and not args.fetch_lyrics:
+        print("No action specified. Use --fetch-spotify and/or --fetch-lyrics.")
+
+
+
 
 if __name__ == "__main__":
     main()
