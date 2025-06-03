@@ -5,27 +5,27 @@ from db import Database
 from lyrics import Lyrics
 
 
-def fetch_spotify_tracks(db, client):
-    tracks = client.get_tracks()
+def fetch_spotify_tracks(db, spotify_client):
+    tracks = spotify_client.get_tracks()
     for track in tracks['items']:
-        temp_track = client.extract_track_data(track)
+        temp_track = spotify_client.extract_track_data(track)
         db.insert_track(temp_track)
 
-def main():
-    db = Database()
-    client = SpotifyClient()
-    genius = GeniusClient()
-
-    # identifying the songs' Genius ID and getting the lyrics
+def fetch_lyrics(db, genius_client):
     artist_track = db.get_track_artist()
     for spotify_id, track, artist in artist_track:
-        genius_id = genius.get_song_id(track, artist)
+        genius_id = genius_client.get_song_id(track, artist)
 
         # If the song is found on Genius, insert it to our database
         if genius_id:
-            lyrics_text = genius.client.lyrics(song_id=genius_id, remove_section_headers=True)
+            lyrics_text = genius_client.client.lyrics(song_id=genius_id, remove_section_headers=True)
             lyrics = Lyrics(genius_id, spotify_id, lyrics_text)
             db.insert_lyrics(lyrics)
+
+def main():
+    db = Database()
+    spotify_client = SpotifyClient()
+    genius_client = GeniusClient()
 
 if __name__ == "__main__":
     main()
