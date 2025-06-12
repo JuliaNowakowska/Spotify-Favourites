@@ -2,6 +2,7 @@ import sqlite3
 from config import DB_FILE
 from track import Track
 from lyrics import Lyrics
+from classification import Classification
 
 class Database:
     def __init__(self):
@@ -12,7 +13,7 @@ class Database:
         with self.conn:
             # Spotify table
             self.conn.execute('''
-                CREATE TABLE IF NOT EXISTS favourite_tracks (
+                CREATE TABLE IF NOT EXISTS spotify_tracks (
                     id TEXT PRIMARY KEY,
                     name TEXT NOT NULL,
                     artists TEXT NOT NULL,
@@ -30,11 +31,20 @@ class Database:
                 )
             ''')
 
+            # Emotion classification table
+            self.conn.execute('''
+                CREATE TABLE IF NOT EXISTS emotions(
+                    genius_id TEXT PRIMARY KEY,
+                    predicted_label TEXT NOT NULL,
+                    confidence FLOAT
+                )
+            ''')
+
 
     def insert_track(self, track: Track):
         with self.conn:
             self.conn.execute('''
-                INSERT OR REPLACE INTO favourite_tracks (id, name, artists, url)
+                INSERT OR REPLACE INTO spotify_tracks (id, name, artists, url)
                 VALUES (?, ?, ?, ?)
             ''', (track.id, track.name, track.artists, track.url))
 
@@ -45,26 +55,33 @@ class Database:
                 VALUES (?, ?, ?)
             ''', (lyrics.genius_id, lyrics.spotify_id, lyrics.lyrics))
 
+    def insert_classification(self, classification: Classification):
+        with self.conn:
+            self.conn.execute('''
+                INSERT OR REPLACE INTO emotions (genius_id, predicted_label, confidence)
+                VALUES (?, ?, ?)
+            ''', (classification.genius_id, classification.predicted_label, classification.confidence))
+
     def get_all_tracks(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT * FROM favourite_tracks')
+        cursor.execute('SELECT * FROM spotify_tracks')
         rows = cursor.fetchall()
         return [Track(*row) for row in rows]
 
-    def get_all_lyrics(self):
+    def get_lyrics(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT * FROM lyrics')
+        cursor.execute('SELECT genius_id, lyrics FROM lyrics')
         rows = cursor.fetchall()
-        return [Lyrics(*row) for row in rows]
+        return [[genius_id, str(lyrics)] for genius_id, lyrics in rows]
 
     def get_top_track(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT * FROM favourite_tracks LIMIT 1')
+        cursor.execute('SELECT * FROM spotify_tracks LIMIT 1')
         top_track = cursor.fetchall()
         return top_track
 
     def get_track_artist(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT id, name, artists FROM favourite_tracks')
+        cursor.execute('SELECT id, name, artists FROM spotify_tracks')
         rows = cursor.fetchall()
         return [(row) for row in rows]
