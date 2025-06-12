@@ -1,5 +1,5 @@
 import sqlite3
-from config import DB_FILE
+from api.config import DB_FILE
 from track import Track
 from lyrics import Lyrics
 from classification import Classification

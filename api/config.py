@@ -1,0 +1,4 @@
+CLIENT_ID="387fdc28360544fc87469e34c666474c"
+CLIENT_SECRET="7ee82f9a154f4f64a38c34309b1a7a38"
+REDIRECT_URI="http://127.0.0.1:8888/callback/"
+DB_FILE= "../favourite_tracks.db"

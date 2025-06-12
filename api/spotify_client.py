@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
-from track import Track
+from db.track import Track
 
 class SpotifyClient:
     def __init__(self):
@@ -13,7 +13,7 @@ class SpotifyClient:
         ))
 
     def get_tracks(self):
-        return self.client.current_user_top_tracks(time_range="long_term")
+        return self.client.current_user_top_tracks(time_range="long_term", limit=50)
 
     def extract_track_data(self, track):
         return Track(

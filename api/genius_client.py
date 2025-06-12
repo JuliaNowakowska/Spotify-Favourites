@@ -3,7 +3,7 @@ from config_genius import TOKEN
 
 class GeniusClient:
     def __init__(self):
-        self.client = Genius(TOKEN)
+        self.client = Genius(TOKEN, timeout=20)
 
     def get_song_id(self, track, artist):
         """
@@ -29,6 +29,5 @@ class GeniusClient:
                 return related["songs"][0]["id"]
         # otherwise return the song id, as this is the OG song
         return song_found.id
-
 
 
