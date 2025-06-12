@@ -3,6 +3,7 @@ from spotify_client import SpotifyClient
 from genius_client import GeniusClient
 from db import Database
 from lyrics import Lyrics
+from classification import Classification
 from emotion_classification import EmotionClassifier
 
 def fetch_spotify_tracks(db, spotify_client):
@@ -26,8 +27,8 @@ def classify_songs(db, emotion_classifier):
     classifications = emotion_classifier.classify_emotions(db)
 
     for id, predicted_label, confidence in classifications:
-        db.insert_classification(id, predicted_label, confidence)
-
+        new_classification = Classification(id, predicted_label, confidence)
+        db.insert_classification(new_classification)
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch Spotify tracks adn Genius lyrics.")
