@@ -82,12 +82,12 @@ class Database:
 
     def get_classifications(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT genius_id, predicted_label')
+        cursor.execute('SELECT genius_id, predicted_label FROM emotions')
         rows = cursor.fetchall()
         return [[genius_id, predicted_label] for genius_id, predicted_label in rows]
 
     def get_classifications_confidence(self):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT genius_id, predicted_label, confidence')
+        cursor.execute('SELECT genius_id, predicted_label, confidence FROM emotions')
         rows = cursor.fetchall()
         return [[genius_id, predicted_label, confidence] for genius_id, predicted_label, confidence in rows]
