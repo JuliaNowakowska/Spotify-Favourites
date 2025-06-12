@@ -30,11 +30,16 @@ def classify_songs(db, emotion_classifier):
         new_classification = Classification(id, predicted_label, confidence)
         db.insert_classification(new_classification)
 
+def visualize(db):
+    classifications = db.get_classifications()
+    print(classifications)
+
 def main():
-    parser = argparse.ArgumentParser(description="Fetch Spotify tracks adn Genius lyrics.")
+    parser = argparse.ArgumentParser(description="Fetch Spotify tracks and Genius lyrics.")
     parser.add_argument('--fetch-spotify', action='store_true', help="Fetch and store your favourite tracks from Spotofy.")
     parser.add_argument('--fetch-lyrics', action='store_true', help="Fetch and store lyrics of your Spotify favourite tracks from Genius.")
     parser.add_argument('--classify-emotions', action='store_true', help="Get emotion classification for each song and save it to the database.")
+    parser.add_argument('--visualize', action='store_true',help="PLACEHOLDER")
 
     args = parser.parse_args()
 
@@ -52,11 +57,15 @@ def main():
         fetch_lyrics(db, genius_client)
 
     if args.classify_emotions:
-        print("Classifying emotions in songs")
+        print("Classifying emotions in songs..")
         classify_songs(db, emotion_classifier)
 
+    if args.visualize:
+        print("Visualizing classifications...")
+        visualize(db)
+
     if not args.fetch_spotify and not args.fetch_lyrics and not args.classify_emotions:
-        print("No action specified. Use --fetch-spotify, -fetch-lyrics or --classify-emotions.")
+        print("No action specified. Use --fetch-spotify, -fetch-lyrics, --classify-emotions or --visualize")
 
 
 if __name__ == "__main__":
