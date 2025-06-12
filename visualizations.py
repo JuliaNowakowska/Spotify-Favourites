@@ -7,8 +7,8 @@ class Histogram:
         self.counts = Counter(self.labels)
 
     def plot_histogram(self):
-        plt.bar(self.counts.keys(), self.counts.values(), color='skyblue')
+        plt.bar(self.counts.keys(), self.counts.values(), color='tomato')
         plt.xlabel('Emotion')
-        plt.ylabel('Frequency')
+        plt.ylabel('# of songs')
         plt.title('Emotion Distribution in my favourite songs')
         plt.show()
