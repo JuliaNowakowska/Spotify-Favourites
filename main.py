@@ -34,7 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch Spotify tracks adn Genius lyrics.")
     parser.add_argument('--fetch-spotify', action='store_true', help="Fetch and store your favourite tracks from Spotofy.")
     parser.add_argument('--fetch-lyrics', action='store_true', help="Fetch and store lyrics of your Spotify favourite tracks from Genius.")
-    parser.add_argument('--classify-emotions', action='store_true', help="x")
+    parser.add_argument('--classify-emotions', action='store_true', help="Get emotion classification for each song and save it to the database.")
 
     args = parser.parse_args()
 
