@@ -74,12 +74,6 @@ class Database:
         rows = cursor.fetchall()
         return [[genius_id, str(lyrics)] for genius_id, lyrics in rows]
 
-    def get_top_track(self):
-        cursor = self.conn.cursor()
-        cursor.execute('SELECT * FROM spotify_tracks LIMIT 1')
-        top_track = cursor.fetchall()
-        return top_track
-
     def get_track_artist(self):
         cursor = self.conn.cursor()
         cursor.execute('SELECT id, name, artists FROM spotify_tracks')
