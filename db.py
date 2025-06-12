@@ -79,3 +79,15 @@ class Database:
         cursor.execute('SELECT id, name, artists FROM spotify_tracks')
         rows = cursor.fetchall()
         return [(row) for row in rows]
+
+    def get_classifications(self):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT genius_id, predicted_label')
+        rows = cursor.fetchall()
+        return [[genius_id, predicted_label] for genius_id, predicted_label in rows]
+
+    def get_classifications_confidence(self):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT genius_id, predicted_label, confidence')
+        rows = cursor.fetchall()
+        return [[genius_id, predicted_label, confidence] for genius_id, predicted_label, confidence in rows]
