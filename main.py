@@ -3,7 +3,7 @@ from spotify_client import SpotifyClient
 from genius_client import GeniusClient
 from db import Database
 from lyrics import Lyrics
-
+from emotion_classification import EmotionClassifier
 
 def fetch_spotify_tracks(db, spotify_client):
     tracks = spotify_client.get_tracks()
@@ -22,16 +22,19 @@ def fetch_lyrics(db, genius_client):
             lyrics = Lyrics(genius_id, spotify_id, lyrics_text)
             db.insert_lyrics(lyrics)
 
+
 def main():
     parser = argparse.ArgumentParser(description="Fetch Spotify tracks adn Genius lyrics.")
     parser.add_argument('--fetch-spotify', action='store_true', help="Fetch and store your favourite tracks from Spotofy.")
     parser.add_argument('--fetch-lyrics', action='store_true', help="Fetch and store lyrics of your Spotify favourite tracks from Genius.")
+    parser.add_argument('--classify-emotions', action='store_true', help="x")
 
     args = parser.parse_args()
 
     db = Database()
     spotify_client = SpotifyClient()
     genius_client = GeniusClient()
+    emotion_classifier = EmotionClassifier()
 
     if args.fetch_spotify:
         print("Fetching tracks from Spotify...")
@@ -41,10 +44,13 @@ def main():
         print("Fetching lyrics from Genius...")
         fetch_lyrics(db, genius_client)
 
-    if not args.fetch_spotify and not args.fetch_lyrics:
+    if args.classify_emotions:
+        print("Classifying emotions in songs")
+        classifications = emotion_classifier.classify_emotions(db)
+        print(classifications)
+
+    if not args.fetch_spotify and not args.fetch_lyrics and not args.classify_emotions:
         print("No action specified. Use --fetch-spotify and/or --fetch-lyrics.")
-
-
 
 
 if __name__ == "__main__":
