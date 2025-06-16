@@ -1,6 +1,6 @@
 # Spotify Favourites
 
-This is a Python-based application that integrates with the **Spotify Web API** and **Genius API** to retrieve a user's top tracks, fetch corresponding lyrics, and store this information in a local database. Once the lyrics are stored, an **emotion classification model** is used in order to investigate which emotions dominate in the user's favourite tracks from Spotify.
+This is a Python-based application that integrates with the **Spotify Web API** and **Genius API** to retrieve user's top tracks, fetch corresponding lyrics, and store this information in a local database. Once the lyrics are stored, an **emotion classification model** is used in order to investigate which emotions dominate in the user's favourite tracks from Spotify.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/203298ed-03fe-460c-9e5c-1e3a9ff64d75" width="600"/>
