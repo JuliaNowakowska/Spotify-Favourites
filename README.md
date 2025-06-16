@@ -30,5 +30,5 @@ Below is the average confidence for each emotion that my favourite tracks were c
 | Fear     | 0.56               |
 | Sadness  | 0.54               |
 | Neutral  | 0.47               |
-| Anger    | 0.44               |
 | Joy      | 0.47               |
+| Anger    | 0.44               |
