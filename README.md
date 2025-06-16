@@ -20,3 +20,15 @@ The output of the project is a distribution of emotions in the user's top tracks
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7326e40c-e2ba-415c-a83d-ba64f940f9f8" width="600"/>
 </div>
+
+#### Evaluation
+Below is the average confidence for each emotion that my favourite tracks were categorized under. Almost all classes achieved confidence levels oscillating aroung 0.5, which indicates how complex the task is as often a song cannot be summarized under one emotion.
+
+| Emotion  | Average Confidence |
+|----------|--------------------|
+| Surprise | 0.71               |
+| Fear     | 0.56               |
+| Sadness  | 0.54               |
+| Neutral  | 0.47               |
+| Anger    | 0.44               |
+| Joy      | 0.47               |
